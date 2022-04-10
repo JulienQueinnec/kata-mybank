@@ -24,4 +24,18 @@ public class OperationServiceTest {
         //Then
         Mockito.verify(operationRepository).save(any(Operation.class));
     }
+
+    @Test
+    void should_create_an_bank_operation_when_ask_far_create_a_withdrawal() {
+        //Given
+        Account account = new Account("12345", new BankUser("Julien", "Queinnec"));
+        Double amount = -100.0;
+        OperationRepository operationRepository = mock(OperationRepository.class);
+        OperationService operationService = new OperationServiceImpl(operationRepository);
+
+        //When
+        operationService.operateWithdrawal(account, amount);
+        //Then
+        Mockito.verify(operationRepository).save(any(Operation.class));
+    }
 }

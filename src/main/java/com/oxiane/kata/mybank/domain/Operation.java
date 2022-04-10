@@ -16,15 +16,17 @@ public class Operation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
     private Double amount;
+    private BankOperationType operationType;
     private LocalDateTime operationDate;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     private Account account;
 
-    public Operation(Double amount, Account account) {
+    public Operation(Double amount, Account account, BankOperationType operationType) {
         this.amount = amount;
         this.account = account;
         this.setOperationDate(LocalDateTime.now());
+        this.operationType = operationType;
     }
 
     public String getId() {
@@ -59,10 +61,19 @@ public class Operation {
         this.account = account;
     }
 
+    public BankOperationType getOperationType() {
+        return operationType;
+    }
+
+    public void setOperationType(BankOperationType operationType) {
+        this.operationType = operationType;
+    }
+
     @Override
     public String toString() {
         return "Operation{" +
                 "amount=" + amount +
+                ", operationType=" + operationType +
                 ", operationDate=" + operationDate +
                 ", account=" + account +
                 '}';
