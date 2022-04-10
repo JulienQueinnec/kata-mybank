@@ -7,6 +7,7 @@ import com.oxiane.kata.mybank.repository.OperationRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 
 public class OperationServiceTest {
@@ -16,12 +17,11 @@ public class OperationServiceTest {
         Account account = new Account("12345", new BankUser("Julien", "Queinnec"));
         Double amount = 100.0;
         OperationRepository operationRepository = mock(OperationRepository.class);
-        OperationService operationService = new OperationServiceImpl();
-        Operation operation = new Operation(amount, account);
+        OperationService operationService = new OperationServiceImpl(operationRepository);
 
         //When
         operationService.operateDeposit(account, amount);
         //Then
-        Mockito.verify(operationRepository).save(operation);
+        Mockito.verify(operationRepository).save(any(Operation.class));
     }
 }
