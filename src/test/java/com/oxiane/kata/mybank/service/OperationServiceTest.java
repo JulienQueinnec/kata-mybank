@@ -1,7 +1,13 @@
 package com.oxiane.kata.mybank.service;
 
+import com.oxiane.kata.mybank.domain.Account;
+import com.oxiane.kata.mybank.domain.BankUser;
+import com.oxiane.kata.mybank.domain.Operation;
+import com.oxiane.kata.mybank.repository.OperationRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+
+import static org.mockito.Mockito.mock;
 
 public class OperationServiceTest {
     @Test
@@ -9,10 +15,13 @@ public class OperationServiceTest {
         //Given
         Account account = new Account("12345", new BankUser("Julien", "Queinnec"));
         Double amount = 100.0;
+        OperationRepository operationRepository = mock(OperationRepository.class);
+        OperationService operationService = new OperationServiceImpl();
+        Operation operation = new Operation(amount, account);
 
         //When
         operationService.operateDeposit(account, amount);
         //Then
-        Mockito.verify(oerationRepository.save(account, amount));
+        Mockito.verify(operationRepository).save(operation);
     }
 }
